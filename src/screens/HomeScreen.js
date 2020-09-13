@@ -40,6 +40,19 @@ const HomeScreen = (props) => {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
+  const animate = () => {
+    LayoutAnimation.configureNext({
+      duration: 300,
+      create: {
+        type: LayoutAnimation.Types.easeInEaseOut,
+        property: LayoutAnimation.Properties.scaleXY,
+      },
+      update: {
+        type: LayoutAnimation.Types.easeInEaseOut,
+      },
+    });
+  };
+
   const onCreate = async (val, date, time) => {
     if (!val.length) {
       ToastAndroid.show(STRINGS.enterTitle, ToastAndroid.SHORT);
@@ -53,7 +66,7 @@ const HomeScreen = (props) => {
       time: STRINGS.expTime + time,
     };
     const newList = [newRecord, ...state[tab].list];
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    animate();
     dispatch(setToDo({list: newList, showBtm: state[tab].showBtm}, tab));
     flatListRef.current.scrollToOffset({animated: true, offset: 0});
     ToastAndroid.show(STRINGS.created, ToastAndroid.SHORT);
@@ -61,7 +74,7 @@ const HomeScreen = (props) => {
 
   const onDelete = () => {
     const newList = state[tab].list.filter((item) => item.isChecked == false);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    animate();
     dispatch(setToDo({list: newList, showBtm: false}, tab));
     ToastAndroid.show(STRINGS.deleted, ToastAndroid.SHORT);
   };
@@ -80,7 +93,7 @@ const HomeScreen = (props) => {
         });
       else newPendingList.push(list[i]);
     }
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    animate();
     dispatch(setToDo({list: newPendingList, showBtm: false}, tab));
     dispatch(
       setToDo(
@@ -108,7 +121,7 @@ const HomeScreen = (props) => {
         });
       else newCompletedList.push(list[i]);
     }
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    animate();
     dispatch(setToDo({list: newCompletedList, showBtm: false}, tab));
     dispatch(
       setToDo(
@@ -134,12 +147,12 @@ const HomeScreen = (props) => {
           break;
         }
       }
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    animate();
     dispatch(setToDo({list: newList, showBtm: newShwBtm}, tab));
   };
 
   const onPageChange = (val) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    animate();
     dispatch(setTab(val));
   };
 

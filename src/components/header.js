@@ -34,7 +34,7 @@ const Header = (props) => {
       return;
     }
     for (let i = 0; i < newList.length; i++) newList[i].isChecked = newVal;
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     dispatch(setToDo({list: newList, showBtm: newVal}, tab));
   };
   return (
